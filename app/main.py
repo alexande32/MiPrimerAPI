@@ -1,19 +1,23 @@
+
 from fastapi import FastAPI
 
 from app import models
 from app.database import Base, engine
-from app.routers import usuarios
+from app.routers import usuarios, auth
 
 # Crear las tablas si no existen
 Base.metadata.create_all(bind=engine)
 
+# Crear la aplicación
 app = FastAPI(
     title="Mi Primera API",
     description="API desarrollada con Python y FastAPI",
     version="1.0.0"
 )
 
+# Registrar los routers
 app.include_router(usuarios.router)
+app.include_router(auth.router)
 
 
 @app.get("/")
